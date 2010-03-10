@@ -1,0 +1,42 @@
+== DropOut-With-Friends
+
+Of the combination effects available in Scriptaculous, Effect.DropOut is one of my favorites. I very much like how it's just
+wrapping two simple effects - Move and Opacity - with Effect.Parallel and giving it a clever name. I also like how the name
+tells me what's happening. It's dropping out. It's leaving town. It's joining the army, or maybe starting a band. Either way,
+it's not here anymore.
+
+Effect.DropOut deserved a twin. BlindUp has BlindDown. Appear has Fade. SlideDown has SlideUp. I thought about it over lunch today
+and couldn't decide if the twin to DropOut would be DropIn or PullOut. You see, the name DropOut conveys two unique attributes of the
+action. First, the effected element is dropping; it's y-value is increasing. Second, it's becoming invisible; it's opacity is
+decreasing.
+
+Thinking in those terms, it became obvious that Effect.DropOut wasn't born a twin, but rather a quadruplet. The full family
+is DropOut, DropIn, PullIn and PullOut. That covers all the possible combinations of direction and result. Neat, right?
+
+Oh, and I thought it was silly that DropOut was fixed to 100 pixels of vertical movement, so I just made that a default that
+can be changed with the *distance* parameter in the options hash. So now you can control direction, distance and result.
+
+Find the demo at: http://dropout-with-friends.heroku.com/
+
+== Structure & Dependencies
+You can find most everything in /public. The core script is at **/public/src/DropOut-With-Friends.js**
+DropOut-With-Friends depends on Prototype and Scriptaculous. The most recent versions (at the time of this writing)
+are included in the /public/javascripts directory. Everything else in /public supports the demos found
+in /public/index.html.
+
+== License
+DropOut-With-Friends is licensed under the MIT License:
+
+(c) 2010 J. Flores (http://github.com/jnf)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation 
+files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, 
+modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software 
+is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES 
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE 
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR 
+IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

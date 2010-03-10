@@ -1,0 +1,165 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>DropOut-With-Friends Demo</title>
+    <link href="stylesheets/reset.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="stylesheets/common.css" media="screen" rel="stylesheet" type="text/css" />
+    <script src="javascripts/prototype.js" type="text/javascript"></script>
+    <script src="javascripts/scriptaculous.js" type="text/javascript"></script>
+    <script src="javascripts/easing.js" type="text/javascript"></script>
+    <script src="src/DropOut-With-Friends.js" type="text/javascript"></script>
+    <script type="text/javascript">
+      document.observe("dom:loaded", function() {
+        $$('div#lyrics p').invoke('hide');
+        Lyrics.initialize();
+      });
+
+      var Lyrics = {
+        initialize: function() {
+          this._controls = $('controls');
+          this._lyrics = $$('div#lyrics p');
+          this._active = this._lyrics.first();
+          this._active.show();
+          new Effect.Fade(this._controls.down('#last'), { to: .5, duration: 1.0, transition: Effect.Transitions.Cubic.easeInOut });
+          this._controls.observe('click', this.handleClick.bind(this));
+        },
+
+        handleClick: function(event) {
+          event.stop();
+          var element = event.element();
+          switch (element.id) {
+            case "last":
+              if (this._active == this._lyrics.first()) return false;
+              var newActive = this._active.previous('p');
+            break;
+            case "next":
+              if (this._active == this._lyrics.last()) return false;
+              var newActive = this._active.next('p');
+            break;   
+            default:
+              return false;
+            break;
+          }
+
+          var direction = element.id == "next" ? "Pull" : "Drop";
+          var effects = $A();
+
+          effects.push(new Effect[direction + "Out"](this._active, { sync: true, distance: 20 })); //remove old copy
+          effects.push(new Effect[direction + "In"](newActive, { sync: true, distance: 20 })); //add new copy
+
+          //if moving to last, adjust switches
+          if (newActive == this._lyrics.last()) {
+            effects.push(new Effect.Opacity('next', { sync: true, to: .5 }));
+          } else {
+            effects.push(new Effect.Opacity('next', { sync: true, to: 1.0 }));
+          }
+
+          //if moving to first, adjust switches
+          if (newActive == this._lyrics.first()) {
+            effects.push(new Effect.Opacity('last', { sync: true, to: .5 }));
+          } else {
+            effects.push(new Effect.Opacity('last', { sync: true, to: 1.0 }));
+          }
+
+          new Effect.Parallel(effects, {
+            duration: 0.7,
+            transition: Effect.Transitions.Cubic.easeIn,
+            afterFinish: function() { this._active = newActive; }.bind(this),
+            queue: { scope: 'lyrics', position: 'end', limit: 1 }
+          })
+        }
+      }
+    </script>
+  </head>
+
+  <body>
+    <h1>DropOut-With-Friends</h1>
+    <p class="intro">
+      Of the combination effects available in Scriptaculous,
+      <a href="http://wiki.github.com/madrobby/scriptaculous/effect-dropout" onclick="window.open(this.href); return false;">
+      Effect.DropOut</a> is one of my favorites. I very much like how it's just
+      wrapping two simple effects &#45; Move and Opacity &#45; with Effect.Parallel and giving it a clever name.
+      I also like how the name tells me what's happening. It's dropping out. It's leaving town.
+      It's joining the army, or maybe starting a band. Either way, it's not here anymore.
+    </p>
+    <p>
+      Effect.DropOut deserved a twin. BlindUp has BlindDown. Appear has Fade. SlideDown has SlideUp. I thought about it
+      over lunch today and couldn't decide if the twin to DropOut would be DropIn or PullOut. You see, the name DropOut
+      conveys two unique attributes of the action. First, the effected element is dropping; it's y&#45;value is increasing.
+      Second, it's becoming invisible; it's opacity is decreasing.
+    </p>
+    <p>
+      Thinking in those terms, it became obvious that Effect.DropOut wasn't born a twin, but rather a quadruplet. The full family
+      is DropOut, DropIn, PullIn and PullOut. That covers all the possible combinations of direction and result. Neat, right?
+    </p>
+    <p>
+      Oh, and I thought it was silly that DropOut was fixed to 100 pixels of vertical movement, so I just made that a default that
+      can be changed with the <em>distance</em> parameter in the options hash. So now you can control direction, distance and result.
+    </p>
+    <div id="demos">
+      <h1>Here's a Demo<em>. . .excepted from The Waste Land  by T. S. Eliot</em></h1>
+      <div id="controls">
+        <div id="next">Next Line</div>
+        <div id="last">Last Line</div>
+      </div>
+      <div id="lyrics">
+        <p>April is the cruellest month, breeding</p>
+        <p>Lilacs out of the dead land, mixing</p>
+        <p>Memory and desire, stirring</p>
+        <p>Dull roots with spring rain.</p>
+        <p>Winter kept us warm, covering</p>
+        <p>Earth in forgetful snow, feeding</p>
+        <p>A little life with dried tubers.</p>
+        <p>Summer surprised us, coming over the Starnbergersee</p>
+        <p>With a shower of rain; we stopped in the colonnade,</p>
+        <p>And went on in sunlight, into the Hofgarten,</p>
+        <p>And drank coffee, and talked for an hour.</p>
+        <p>Bin gar keine Russin, stamm' aus Litauen, echt deutsch.</p>
+        <p>And when we were children, staying at the archduke's,</p>
+        <p>My cousin's, he took me out on a sled,</p>
+        <p>And I was frightened. He said, Marie,</p>
+        <p>Marie, hold on tight. And down we went.</p>
+        <p>In the mountains, there you feel free.</p>
+        <p>I read, much of the night, and go south in the winter.</p>
+        <p>What are the roots that clutch, what branches grow</p>
+        <p>Out of this stony rubbish? Son of man,</p>
+        <p>You cannot say, or guess, for you know only</p>
+        <p>A heap of broken images, where the sun beats,</p>
+        <p>And the dead tree gives no shelter, the cricket no relief,</p>
+        <p>And the dry stone no sound of water. Only</p>
+        <p>There is shadow under this red rock,</p>
+        <p>(Come in under the shadow of this red rock),</p>
+        <p>And I will show you something different from either</p>
+        <p>Your shadow at morning striding behind you</p>
+        <p>Or your shadow at evening rising to meet you;</p>
+        <p>I will show you fear in a handful of dust.</p>
+      </div>
+    </div>
+    <h1>License &amp; Source</h1>
+    <p>DropOut-With-Friends is licensed under the MIT License:</p>
+    <p>
+      &copy; 2010 J. Flores
+      (<a href="http://github.com/jnf" onclick="window.open(this.href); return false;">http://github.com/jnf</a>)
+    </p>
+    <p>
+      Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation 
+      files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, 
+      modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software 
+      is furnished to do so, subject to the following conditions:
+    </p>
+    <p>
+      The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+    </p>
+    <p>
+      THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES 
+      OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE 
+      LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR 
+      IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.      
+    </p>
+    <p>
+      The complete source is available
+      <a href="http://github.com/jnf/DropOut-With-Friends" onclick="window.open(this.href); return false;">at Github</a>.
+    </p>
+  </body>
+</html>
