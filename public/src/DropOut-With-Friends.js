@@ -1,3 +1,11 @@
+/*
+ * @author jnf (http://github.com/jnf)
+ * @description Extends Scripty to include three new effects: Effect.DropIn, Effect.PullIn, Effect.PullOut. Enhances Effct.DropOut.
+ * @dependency Prototype 1.6.1 (http://www.prototypejs.org)
+ * @dependecy Scriptaculous 1.8.3 (http://github.com/madrobby/scriptaculous)
+ * @license MIT License, see README.rdoc
+*/
+
 Effect.DropOut = function(element) {
   element = $(element);
   var oldStyle = {
